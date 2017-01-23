@@ -1,0 +1,28 @@
+#!/bin/bash
+# Yet to be implemented
+PROJECT_NAME={{project}}
+PROJECT_PATH={{project_path}}
+VENV_PATH={{project_venv}}
+
+
+setup:
+	${VENV_PATH}/bin/pip install pip --upgrade
+	${VENV_PATH}/bin/pip install -e . --upgrade
+	${VENV_PATH}/bin/pip install -e '.[testing]' --upgrade
+
+runtests:
+	${VENV_PATH}/bin/python -m pytest -q --disable-pytest-warnings -r pPfxE
+
+revision:
+	@read -p "What did you add? " MSG && \
+	cd ${PROJECT_PATH} &&\
+	${VENV_PATH}/bin/alembic revision --autogenerate -m "$$MSG"
+
+upgrade:
+	cd ${PROJECT_PATH} && ${VENV_PATH}/bin/alembic upgrade head
+
+downgrade:
+	cd ${PROJECT_PATH} && ${VENV_PATH}/bin/alembic downgrade -1
+
+run:
+	cd ${PROJECT_PATH} &&  ${VENV_PATH}/bin/pserve development.ini

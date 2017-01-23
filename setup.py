@@ -18,6 +18,6 @@ setup(
     ],
     entry_points="""\
             [pyramid.scaffold]
-            ring=pyramid_ring.scaffolds:PyramidRingProjectTemplate
+            runner=pyramid_runner.scaffolds:PyramidRunnerProjectTemplate
             """,
 )

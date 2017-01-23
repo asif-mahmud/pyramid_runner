@@ -57,7 +57,6 @@ Following packages are included in the `setup.py` -
  | |
  | |-# models
  | |-# views
- | |-# security
  | |-# scripts
  | |-# tests
  | |-# resources - Includes all your resource classes including Root resource.
