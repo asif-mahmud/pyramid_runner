@@ -10,7 +10,7 @@ setup:
 	${VENV_PATH}/bin/pip install -e . --upgrade
 	${VENV_PATH}/bin/pip install -e '.[testing]' --upgrade
 
-runtests:
+test:
 	${VENV_PATH}/bin/python -m pytest -q --disable-pytest-warnings -r pPfxE
 
 revision:

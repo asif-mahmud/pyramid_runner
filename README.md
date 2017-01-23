@@ -86,7 +86,7 @@ The `Makefile` inside the `project folder` provides some easy shortcut commands-
 - `make upgrade` : Migrate your database to latest revision.
 - `make downgrade` : Migrate your database to a previous revision.
 - `make run` : Run `pserve` to serve local server. Additionally it will start watching `SASS` sources and angular apps.
-- `make runtests` : Run `pytest` to test the project.
+- `make test` : Run `pytest` to test the project.
 
 ##Features of `ModelBase`
 
@@ -98,7 +98,36 @@ inherit the infamous `Base` class. It provides the following class level attribu
 - `updated_on` : A `DateTime Column` to provide when the entry was updated. Always the last update time.
 - `__tablename__` : You don't have to write `__tablename__` whenver you create a `Model`
 
+##Helper Classes
+
+###`resources.base.BaseRoot`
+Root resource inherits this class. See the default `resources.root.Root` resource.
+
+###`resources.base.BaseChild`
+A helper base class for child nodes in the resource tree. `__name__` and `__parent__`
+attributes are handled in the `__init__` method. So a container child need to
+implement `get_child_instance` method of it's own to generate it's requested 
+child node. Decisions made here are -
+
+1. `Parent/Container` node is responsible to generate `Child` node.
+2. `Parent/Container` node is responsible to give the `Child` instance a name.
+
+###`views.base.BaseView`
+A helper class for view classes. What it does -
+
+1. Sets the `request` attribute in `__init__` method.
+
 ##Version History
+
+###Version 1.0.0
+* `ModelBase` includes an abstract `__json__(request)` method.
+
+###Version 0.9.0
+* Working version with 3 utility classes -
+    1. `BaseRoot`
+    2. `BaseChild`
+    3. `BaseView`
+* Added an example functional test for `home_view`.
 
 ###Version 0.0.1
 * Git initialization.

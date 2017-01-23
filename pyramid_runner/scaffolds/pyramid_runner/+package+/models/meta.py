@@ -40,6 +40,12 @@ class ModelBase(object):
             )
         )
 
+    def __json__(self, request):
+        raise NotImplementedError("{} didn't implemented __json__(request) method for {}".format(
+            self.__tablename__,
+            request.url
+        ))
+
 
 metadata = MetaData(naming_convention=NAMING_CONVENTION)
 Base = declarative_base(metadata=metadata, cls=ModelBase)
