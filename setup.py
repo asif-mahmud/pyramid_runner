@@ -6,7 +6,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 setup(
     name='pyramid_runner',
-    version='0.0.1',
+    version='0.9.0',
     author='Asif Mahmud Shimon',
     email='ams.eee09@gmail.com',
     packages=find_packages(),
