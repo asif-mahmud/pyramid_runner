@@ -7,6 +7,7 @@ def main(global_config, **settings):
     """
     config = Configurator(settings=settings)
     config.add_renderer(None, JSON())   # Add JSON as default renderer
+    config.include('.security')
     config.include('.models')
     config.include('.resources')
     config.scan()

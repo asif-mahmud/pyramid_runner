@@ -59,6 +59,7 @@ Following packages are included in the `setup.py` -
  | |-# views
  | |-# scripts
  | |-# tests
+ | |-# security
  | |-# resources - Includes all your resource classes including Root resource.
  |
  |-# alembic
@@ -117,7 +118,16 @@ A helper class for view classes. What it does -
 
 1. Sets the `request` attribute in `__init__` method.
 
+###`security.base.BaseUserRetriever`
+A base class to retreive authenticated user info from request params.
+
+###`security.base.BaseAuthPolicy`
+Base class for ticket based authentication policy.
+
 ##Version History
+
+###Version 1.9.0
+* Added a basic stateless security system.
 
 ###Version 1.0.0
 * `ModelBase` includes an abstract `__json__(request)` method.
