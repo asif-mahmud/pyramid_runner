@@ -26,14 +26,23 @@ Following packages are included in the `setup.py` -
 * One configuration file per environment(i.e development and production).
 * A simple **Makefile** to make life even easier(See the usage of the Makefile).
 * A built-in `ModelBase` for **SQLAlchemy** (See features of the `ModelBase`).
+* Uses `CookieCutter` project templating system.
 
 ##Requirements
 
 * A Linux OS
 * [Python 3+](https://www.python.org/downloads/)
+* [CookieCutter](https://github.com/audreyr/cookiecutter)
 
 ##Installation
 
+After installing `cookiecutter`, run -
+
+```
+cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
+```
+
+***(Obsolete)***
 - Create a `Python virtual environtment` first.
 - Clone the **git repo**.
 - Open a `Terminal` inside `pyramid_runner`. 
@@ -125,6 +134,9 @@ A base class to retreive authenticated user info from request params.
 Base class for ticket based authentication policy.
 
 ##Version History
+
+###Version 2.0.0
+* Using `cookiecutter` project templating system.
 
 ###Version 1.9.0
 * Added a basic stateless security system.

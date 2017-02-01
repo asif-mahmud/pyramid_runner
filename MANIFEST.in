@@ -1,2 +1,0 @@
-graft pyramid_runner
-include *.txt *.ini *.rst *.md

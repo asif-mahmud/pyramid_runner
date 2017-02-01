@@ -1,0 +1,12 @@
+{
+  "project" : "Pyramid Application",
+  "project_venv" : "/usr",
+  "project_version" : "1.0.0",
+  "project_description" : "A Slim Pyramid Runner Application",
+  "author": "Asif Mahmud Shimon",
+  "email": "ams.eee09@gmail.com",
+  "url" : "https://www.embeddedgamers.com",
+  "git_host": ["github.com", "gitlab.com"],
+  "git_repo": "",
+  "project_name" : "{{cookiecutter.project|lower|replace(' ', '_')}}"
+}

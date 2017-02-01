@@ -1,4 +1,4 @@
-{{project}} README
+{{cookiecutter.project}} README
 ==================
 
 Getting Started
@@ -8,7 +8,7 @@ Getting Started
 
 - $VENV/bin/pip install -e .
 
-- $VENV/bin/initialize_{{project}}_db development.ini
+- $VENV/bin/initialize_{{cookiecutter.project_name}}_db development.ini
 
 - $VENV/bin/pserve development.ini
 

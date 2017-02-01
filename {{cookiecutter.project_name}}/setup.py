@@ -25,9 +25,9 @@ tests_require = [
     'pytest-cov',
     ]
 
-setup(name='{{project}}',
+setup(name='{{cookiecutter.project_name}}',
       version='1.0.0',
-      description='{{project}}',
+      description='{{cookiecutter.project_description}}',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
           "Programming Language :: Python",
@@ -35,9 +35,9 @@ setup(name='{{project}}',
           "Topic :: Internet :: WWW/HTTP",
           "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
       ],
-      author='Asif Mahmud Shimon',
-      author_email='ams.eee09@gmail.com',
-      url='https://embeddedgamers.com',
+      author='{{cookiecutter.author}}',
+      author_email='{{cookiecutter.email}}',
+      url='{{cookiecutter.url}}',
       keywords='web wsgi bfg pylons pyramid sqlalchemy',
       packages=find_packages(),
       include_package_data=True,
@@ -48,8 +48,8 @@ setup(name='{{project}}',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
-      main = {{project}}:main
+      main = {{cookiecutter.project_name}}:main
       [console_scripts]
-      initialize_{{project}}_db = {{project}}.scripts.initializedb:main
+      initialize_{{cookiecutter.project_name}}_db = {{cookiecutter.project_name}}.scripts.initializedb:main
       """,
       )

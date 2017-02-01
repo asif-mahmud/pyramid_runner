@@ -1,8 +1,7 @@
 #!/bin/bash
 # Yet to be implemented
-PROJECT_NAME={{project}}
-PROJECT_PATH={{project_path}}
-VENV_PATH={{project_venv}}
+PROJECT_NAME={{cookiecutter.project_name}}
+VENV_PATH={{cookiecutter.project_venv}}
 
 
 setup:
@@ -15,14 +14,13 @@ test:
 
 revision:
 	@read -p "What did you add? " MSG && \
-	cd ${PROJECT_PATH} &&\
 	${VENV_PATH}/bin/alembic revision --autogenerate -m "$$MSG"
 
 upgrade:
-	cd ${PROJECT_PATH} && ${VENV_PATH}/bin/alembic upgrade head
+	${VENV_PATH}/bin/alembic upgrade head
 
 downgrade:
-	cd ${PROJECT_PATH} && ${VENV_PATH}/bin/alembic downgrade -1
+	${VENV_PATH}/bin/alembic downgrade -1
 
 run:
-	cd ${PROJECT_PATH} &&  ${VENV_PATH}/bin/pserve development.ini
+	${VENV_PATH}/bin/pserve development.ini
