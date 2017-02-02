@@ -1,5 +1,5 @@
 from pyramid.authentication import AuthTktAuthenticationPolicy
-from pyramid.request import Request
+from pyramid.request import Request, Response
 
 
 class BaseUserRetriever(object):
