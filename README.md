@@ -135,6 +135,9 @@ Base class for ticket based authentication policy.
 
 ##Version History
 
+###Version 2.9.0
+* Added `CORS` headers on `NewResponse` event.
+
 ###Version 2.0.0
 * Using `cookiecutter` project templating system.
 
