@@ -12,9 +12,10 @@ requires = [
     'pyramid',
     'pyramid_tm',
     'SQLAlchemy',
+    'psycopg2',
     'transaction',
     'zope.sqlalchemy',
-    'waitress',
+    'gunicorn',
     'bcrypt',
     'alembic',
     ]

@@ -135,6 +135,9 @@ Base class for ticket based authentication policy.
 
 ##Version History
 
+###Version 3.0.0
+* Using `Gunicorn` instead of waitress as development and production server.
+
 ###Version 2.9.0
 * Added `CORS` headers on `NewResponse` event.
 
