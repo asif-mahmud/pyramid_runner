@@ -135,6 +135,9 @@ Base class for ticket based authentication policy.
 
 ##Version History
 
+###Version 3.9.0
+* Added `pyramid_jwt` for `JWT` authentication suitable for `CORS`.
+
 ###Version 3.0.0
 * Using `Gunicorn` instead of waitress as development and production server.
 

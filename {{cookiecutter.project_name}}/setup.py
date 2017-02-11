@@ -18,6 +18,7 @@ requires = [
     'gunicorn',
     'bcrypt',
     'alembic',
+    'pyramid_jwt',
     ]
 
 tests_require = [
