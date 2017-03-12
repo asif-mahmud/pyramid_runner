@@ -1,6 +1,6 @@
-from .base import BaseRoot
+from . import base
 
 
-class Root(BaseRoot):
+class Root(base.BaseRoot):
 
     __tree__ = dict()

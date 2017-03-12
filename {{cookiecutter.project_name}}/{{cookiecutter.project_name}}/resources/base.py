@@ -1,9 +1,5 @@
-from pyramid.request import Request
-from pyramid.security import (
-    Allow,
-    Everyone,
-    ALL_PERMISSIONS
-)
+import pyramid.request as request
+import pyramid.security as security
 
 
 class BaseResource(object):
@@ -44,9 +40,9 @@ class BaseRoot(BaseResource):
     __parent__ = None
     __tree__ = dict()
 
-    def __init__(self, request):
-        if isinstance(request, Request):
-            self.request = request
+    def __init__(self, req):
+        if isinstance(req, request.Request):
+            self.request = req
 
     def __getitem__(self, item):
         child = self.__tree__.get(item, [])
@@ -59,7 +55,7 @@ class BaseRoot(BaseResource):
     def __acl__(self):
         """Assuming the Root resource can be accessed by everyone."""
         return [
-            (Allow, Everyone, ALL_PERMISSIONS),
+            (security.Allow, security.Everyone, security.ALL_PERMISSIONS),
         ]
 
 
@@ -75,9 +71,12 @@ class BaseChild(BaseResource):
     Usage:
     ```
     class CatList(BaseChild):
-        def get_child_instance(self, key):
+        def child_class(self, key):
             if key in database:
-                return Cat(parent, key, self.request)
+                return Cat
+
+        def child_instance(self, key):
+            return Cat(self, key, self.request)
 
         def __acl__(self):
             return [DENY_ALL]
@@ -86,22 +85,46 @@ class BaseChild(BaseResource):
     Note: The returned child of `get_child_instance` must inherit `BaseChild`.
     """
 
-    def __init__(self, parent, key, request):
+    def __init__(self, parent, key, req):
         self.__parent__ = parent
         self.__name__ = key
-        if isinstance(request, Request):
-            self.request = request
+        if isinstance(req, request.Request):
+            self.request = req
 
-    def get_child_instance(self, key):
-        return []
+    def child_class(self, key):
+        """Override this method to construct the resource tree.
+
+        Return the child class of type `BaseChild`. To return
+        an instance use `child_instance` method.
+        """
+        return None
+
+    def child_instance(self, key):
+        """Provide an instance of the child resource."""
+        return None
+
+    def __acl__(self):
+        return [
+            (security.Allow, security.Everyone, security.ALL_PERMISSIONS),
+        ]
 
     def __getitem__(self, item):
-        child = self.get_child_instance(item)
+        # Try finding a child class first
+        ChildCls = self.child_class(item)
 
-        if child:
-            if issubclass(child, BaseChild):
-                return child
+        if ChildCls:
+            if issubclass(ChildCls, BaseChild):
+                return ChildCls(self, item, self.request)
             else:
                 raise ValueError('Child is not of type BaseChild')
-        else:
-            raise KeyError
+
+        # Try finding a child instance
+        child_instance = self.child_instance(item)
+        if child_instance:
+            if isinstance(child_instance, BaseChild):
+                return child_instance
+            else:
+                raise ValueError('Child is not of type BaseChild')
+
+        # Could not find any child
+        raise KeyError()

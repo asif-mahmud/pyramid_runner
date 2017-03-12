@@ -1,13 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.schema import MetaData
-from sqlalchemy import (
-    Column,
-    Integer,
-    DateTime,
-)
-from sqlalchemy import func
-from sqlalchemy.ext.declarative import declared_attr
 import re
+
+import sqlalchemy as sa
+import sqlalchemy.ext.declarative as declarative
+import sqlalchemy.schema as schema
 
 
 # Recommended naming convention used by Alembic, as various different database
@@ -22,13 +17,36 @@ NAMING_CONVENTION = {
 }
 
 
+PSQL_UPDATED_TIMESTAMP_FNC = sa.text(
+    'CREATE OR REPLACE FUNCTION set_updated_timestamp()'
+    ' RETURNS TRIGGER'
+    ' LANGUAGE plpgsql'
+    ' AS $$'
+    ' BEGIN'
+    ' NEW.updated_on := now();'
+    ' RETURN NEW;'
+    ' END;'
+    '$$;'
+)
+
+
+def psql_attach_update_timestamp_trigger(tablename):
+    return sa.text(
+        'CREATE TRIGGER {0}_update_timestamp'
+        ' BEFORE UPDATE ON {0}'
+        ' FOR EACH ROW EXECUTE PROCEDURE set_updated_timestamp();'.format(
+            tablename
+        )
+    )
+
+
 class ModelBase(object):
 
-    id = Column(Integer, primary_key=True)
-    created_on = Column(DateTime, server_default=func.now())
-    updated_on = Column(DateTime, server_default=func.now(), server_onupdate=func.now())
+    id = sa.Column(sa.Integer, primary_key=True)
+    created_on = sa.Column(sa.DateTime, server_default=sa.func.now())
+    updated_on = sa.Column(sa.DateTime, server_default=sa.func.now(), onupdate=sa.func.now())
 
-    @declared_attr
+    @declarative.declared_attr
     def __tablename__(cls):
         name = cls.__name__
         return (
@@ -41,11 +59,11 @@ class ModelBase(object):
         )
 
     def __json__(self, request):
-        raise NotImplementedError("{} didn't implemented __json__(request) method for {}".format(
+        raise NotImplementedError("{} didn't implement __json__(request) method for {}".format(
             self.__tablename__,
             request.url
         ))
 
 
-metadata = MetaData(naming_convention=NAMING_CONVENTION)
-Base = declarative_base(metadata=metadata, cls=ModelBase)
+metadata = schema.MetaData(naming_convention=NAMING_CONVENTION)
+Base = declarative.declarative_base(metadata=metadata, cls=ModelBase)

@@ -1,7 +1,7 @@
-from .base import BaseFunctionalTest
+from . import base
 
 
-class TestCORSHeaders(BaseFunctionalTest):
+class TestCORSHeaders(base.BaseFunctionalTest):
 
     def test_origin_access(self):
         res = self.test_app.get('/')
@@ -12,7 +12,8 @@ class TestCORSHeaders(BaseFunctionalTest):
             'POST',
             'GET',
             'PUT',
-            'DELETE'
+            'DELETE',
+            'OPTIONS',
         )
         res = self.test_app.get('/')
         res_methods = res.headers.get('Access-Control-Allow-Methods').split(',')

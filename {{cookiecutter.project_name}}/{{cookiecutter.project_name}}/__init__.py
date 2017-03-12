@@ -1,12 +1,13 @@
-from pyramid.config import Configurator
-from pyramid.renderers import JSON
+import pyramid.config
+import pyramid.renderers as renderers
 
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    config = Configurator(settings=settings)
-    config.add_renderer(None, JSON())   # Add JSON as default renderer
+    config = pyramid.config.Configurator(settings=settings)
+    config.add_renderer(None, renderers.JSON())   # Add JSON as default renderer
+    config.include('pyramid_jwt')
     config.include('.security')
     config.include('.models')
     config.include('.resources')

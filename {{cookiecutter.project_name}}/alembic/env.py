@@ -1,25 +1,24 @@
-from alembic import context
-from sqlalchemy import engine_from_config, pool
-from paste.deploy import loadapp
-from pyramid.paster import get_appsettings, setup_logging
-#from logging.config import fileConfig
+import alembic
+import sqlalchemy as sa
+import paste.deploy
+import pyramid.paster
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-config = context.config
+config = alembic.context.config
 pyramid_config_file = config.get_main_option('pyramid_config_file')
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 # fileConfig(config.config_file_name)
-setup_logging(pyramid_config_file)
+pyramid.paster.setup_logging(pyramid_config_file)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-app = loadapp('config:%s' % pyramid_config_file, relative_to='.')
-settings = get_appsettings(pyramid_config_file)
+app = paste.deploy.loadapp('config:%s' % pyramid_config_file, relative_to='.')
+settings = pyramid.paster.get_appsettings(pyramid_config_file)
 target_metadata = __import__(app.registry.__name__).models.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -37,10 +36,10 @@ def run_migrations_offline():
     Calls to context.execute() here emit the given string to the
     script output.
     """
-    context.configure(url=settings.get('sqlalchemy.url'))
+    alembic.context.configure(url=settings.get('sqlalchemy.url'))
 
-    with context.begin_transaction():
-        context.run_migrations()
+    with alembic.context.begin_transaction():
+        alembic.context.run_migrations()
 
 
 def run_migrations_online():
@@ -48,25 +47,25 @@ def run_migrations_online():
     In this scenario we need to create an Engine
     and associate a connection with the context.
     """
-    engine = engine_from_config(settings, 'sqlalchemy.')
+    engine = sa.engine_from_config(settings, 'sqlalchemy.')
     # engine = engine_from_config(
     #            config.get_section(config.config_ini_section),
     #            prefix='sqlalchemy.',
     #            poolclass=pool.NullPool)
 
     connection = engine.connect()
-    context.configure(
-                connection=connection,
-                target_metadata=target_metadata
-                )
+    alembic.context.configure(
+        connection=connection,
+        target_metadata=target_metadata
+    )
 
     try:
-        with context.begin_transaction():
-            context.run_migrations()
+        with alembic.context.begin_transaction():
+            alembic.context.run_migrations()
     finally:
         connection.close()
 
-if context.is_offline_mode():
+if alembic.context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()

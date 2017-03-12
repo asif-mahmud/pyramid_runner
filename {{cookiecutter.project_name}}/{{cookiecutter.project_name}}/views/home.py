@@ -1,16 +1,14 @@
-from pyramid.view import (
-    view_defaults,
-    view_config
-)
-from ..resources import Root
-from .base import BaseView
+import pyramid.view as view
+
+from . import base
+import {{cookiecutter.project_name}}.resources.root as root
 
 
-@view_defaults(context=Root)
-class HomeView(BaseView):
+@view.view_defaults(context=root.Root)
+class HomeView(base.BaseView):
 
-    @view_config(name='')
+    @view.view_config(name='', request_method='GET')
     def hello_world(self):
-        return dict(
+        return base.BaseJSONResponse(
             msg='Hello World!',
         )

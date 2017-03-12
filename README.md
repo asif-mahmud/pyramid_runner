@@ -107,6 +107,7 @@ inherit the infamous `Base` class. It provides the following class level attribu
 - `created_on` : A `DateTime Column` to provide when the entry was created. Defaults to current time.
 - `updated_on` : A `DateTime Column` to provide when the entry was updated. Always the last update time.
 - `__tablename__` : You don't have to write `__tablename__` whenver you create a `Model`
+- `__json__` : Method to represent the model as `JSON` object.
 
 ##Helper Classes
 
@@ -116,8 +117,8 @@ Root resource inherits this class. See the default `resources.root.Root` resourc
 ###`resources.base.BaseChild`
 A helper base class for child nodes in the resource tree. `__name__` and `__parent__`
 attributes are handled in the `__init__` method. So a container child need to
-implement `get_child_instance` method of it's own to generate it's requested 
-child node. Decisions made here are -
+implement `child_instance` and/or `child_class` (***Updated in version 4.0.0***) 
+methods of it's own to generate it's requested child node. Decisions made here are -
 
 1. `Parent/Container` node is responsible to generate `Child` node.
 2. `Parent/Container` node is responsible to give the `Child` instance a name.
@@ -126,14 +127,35 @@ child node. Decisions made here are -
 A helper class for view classes. What it does -
 
 1. Sets the `request` attribute in `__init__` method.
+2. Adds a default empty view for `OPTIONS` HTTP requests.
+
+###`views.base.BaseJSONResponse`
+(**new in version 4.0.0**)
+A subclass of `dict` to provide consistent response from different views.
+It includes the following keys-
+
+1. code : An integer code mostly representing HTTP response code. Dafaults 200.
+2. status: A string status like "OK" or "ERROR". Defaults "OK".
+3. msg: A string containing a message for the client. Defaults "".
+4. error: A string containing any error message to send to the client. Defaults "".
+
+These keys can be accessed both as dictionary keys or class attributes.
 
 ###`security.base.BaseUserRetriever`
 A base class to retreive authenticated user info from request params.
 
+**NOTE:** Deprecated from verion 3.9+ 
+
 ###`security.base.BaseAuthPolicy`
 Base class for ticket based authentication policy.
 
+**NOTE:** Deprecated from verion 3.9+
+
 ##Version History
+
+###Version 4.0.0
+* More pythonic all the way. Improved `import` statements.
+* `BaseView`, `BaseChild` has more functionalities.
 
 ###Version 3.9.0
 * Added `pyramid_jwt` for `JWT` authentication suitable for `CORS`.
