@@ -15,6 +15,7 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'gunicorn',
+    'gevent',
     'bcrypt',
     'alembic',
     'pyramid_jwt',
