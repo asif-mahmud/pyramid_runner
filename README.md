@@ -1,4 +1,4 @@
-#pyramid_runner
+# pyramid_runner
 
 ![Image not found](images/pyramid_runner.png)
 
@@ -17,7 +17,7 @@ Following packages are included in the `setup.py` -
 2. [SQLAlchemy](http://www.sqlalchemy.org/)
 3. [Alembic](http://alembic.zzzcomputing.com/)
 
-##Key Features
+## Key Features
 
 * A predetermined project structure (See Project Structure).
 * Saves hours of google search and typing.
@@ -28,13 +28,13 @@ Following packages are included in the `setup.py` -
 * A built-in `ModelBase` for **SQLAlchemy** (See features of the `ModelBase`).
 * Uses `CookieCutter` project templating system.
 
-##Requirements
+## Requirements
 
 * A Linux OS
 * [Python 3+](https://www.python.org/downloads/)
 * [CookieCutter](https://github.com/audreyr/cookiecutter)
 
-##Installation
+## Installation
 
 After installing `cookiecutter`, run -
 
@@ -49,7 +49,7 @@ cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
 - Activate the `virtual environtment` by running `source <your-venv-path>/bin/activate`. 
 - Run `python setup.py install`
 
-##Project Structure
+## Project Structure
 
 - **#** - Stands for Folder.
 - **+** - Stands for File.
@@ -66,7 +66,6 @@ cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
  | |
  | |-# models
  | |-# views
- | |-# scripts
  | |-# tests
  | |-# security
  | |-# resources - Includes all your resource classes including Root resource.
@@ -87,7 +86,7 @@ cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
  |-+ Makefile - Provides some useful shortcut commands.
 ```
 
-##Usage of Makefile 
+## Usage of Makefile 
 
 The `Makefile` inside the `project folder` provides some easy shortcut commands-
 
@@ -98,7 +97,7 @@ The `Makefile` inside the `project folder` provides some easy shortcut commands-
 - `make run` : Run `pserve` to serve local server. Additionally it will start watching `SASS` sources and angular apps.
 - `make test` : Run `pytest` to test the project.
 
-##Features of `ModelBase`
+## Features of `ModelBase`
 
 It is a default `Model` base for all of your **SQLAlchemy** Models. But you don't have to inherit it, instead you 
 inherit the infamous `Base` class. It provides the following class level attributes -
@@ -109,12 +108,12 @@ inherit the infamous `Base` class. It provides the following class level attribu
 - `__tablename__` : You don't have to write `__tablename__` whenver you create a `Model`
 - `__json__` : Method to represent the model as `JSON` object.
 
-##Helper Classes
+## Helper Classes
 
-###`resources.base.BaseRoot`
+### `resources.base.BaseRoot`
 Root resource inherits this class. See the default `resources.root.Root` resource.
 
-###`resources.base.BaseChild`
+### `resources.base.BaseChild`
 A helper base class for child nodes in the resource tree. `__name__` and `__parent__`
 attributes are handled in the `__init__` method. So a container child need to
 implement `child_instance` and/or `child_class` (***Updated in version 4.0.0***) 
@@ -123,13 +122,13 @@ methods of it's own to generate it's requested child node. Decisions made here a
 1. `Parent/Container` node is responsible to generate `Child` node.
 2. `Parent/Container` node is responsible to give the `Child` instance a name.
 
-###`views.base.BaseView`
+### `views.base.BaseView`
 A helper class for view classes. What it does -
 
 1. Sets the `request` attribute in `__init__` method.
 2. Adds a default empty view for `OPTIONS` HTTP requests.
 
-###`views.base.BaseJSONResponse`
+### `views.base.BaseJSONResponse`
 (**new in version 4.0.0**)
 A subclass of `dict` to provide consistent response from different views.
 It includes the following keys-
@@ -141,46 +140,46 @@ It includes the following keys-
 
 These keys can be accessed both as dictionary keys or class attributes.
 
-###`security.base.BaseUserRetriever`
+### `security.base.BaseUserRetriever`
 A base class to retreive authenticated user info from request params.
 
 **NOTE:** Deprecated from verion 3.9+ 
 
-###`security.base.BaseAuthPolicy`
+### `security.base.BaseAuthPolicy`
 Base class for ticket based authentication policy.
 
 **NOTE:** Deprecated from verion 3.9+
 
-##Version History
+## Version History
 
-###Version 4.0.0
+### Version 4.0.0
 * More pythonic all the way. Improved `import` statements.
 * `BaseView`, `BaseChild` has more functionalities.
 
-###Version 3.9.0
+### Version 3.9.0
 * Added `pyramid_jwt` for `JWT` authentication suitable for `CORS`.
 
-###Version 3.0.0
+### Version 3.0.0
 * Using `Gunicorn` instead of waitress as development and production server.
 
-###Version 2.9.0
+### Version 2.9.0
 * Added `CORS` headers on `NewResponse` event.
 
-###Version 2.0.0
+### Version 2.0.0
 * Using `cookiecutter` project templating system.
 
-###Version 1.9.0
+### Version 1.9.0
 * Added a basic stateless security system.
 
-###Version 1.0.0
+### Version 1.0.0
 * `ModelBase` includes an abstract `__json__(request)` method.
 
-###Version 0.9.0
+### Version 0.9.0
 * Working version with 3 utility classes -
     1. `BaseRoot`
     2. `BaseChild`
     3. `BaseView`
 * Added an example functional test for `home_view`.
 
-###Version 0.0.1
+### Version 0.0.1
 * Git initialization.
