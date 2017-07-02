@@ -76,11 +76,12 @@ cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
  | |-+ script.py.mako
  | |-+ env.py
  |
+ |-# wsgi - Will contain wsgi servers's log files and pid file.
+ |
  |-+ setup.py - Python distribution setup file.
  |-+ development.ini - Development environment config file.
  |-+ production.ini - Production environment config file.
  |-+ alembic.ini - Pyramid project friendly alembic config file.
- |-+ pytest.ini - Python test config.
  |-+ MANIFEST.in
  |-+ CHANGES.txt
  |-+ Makefile - Provides some useful shortcut commands.
@@ -105,7 +106,7 @@ inherit the infamous `Base` class. It provides the following class level attribu
 - `id` : An `Integer Column` as `primary_key`. Feel free to override it anytime.
 - `created_on` : A `DateTime Column` to provide when the entry was created. Defaults to current time.
 - `updated_on` : A `DateTime Column` to provide when the entry was updated. Always the last update time.
-- `__tablename__` : You don't have to write `__tablename__` whenver you create a `Model`
+- `__tablename__` : You don't have to write `__tablename__` whenever you create a `Model`
 - `__json__` : Method to represent the model as `JSON` object.
 
 ## Helper Classes
@@ -143,14 +144,21 @@ These keys can be accessed both as dictionary keys or class attributes.
 ### `security.base.BaseUserRetriever`
 A base class to retreive authenticated user info from request params.
 
-**NOTE:** Deprecated from verion 3.9+ 
+**NOTE:** Removed from verion 3.9+ 
 
 ### `security.base.BaseAuthPolicy`
 Base class for ticket based authentication policy.
 
-**NOTE:** Deprecated from verion 3.9+
+**NOTE:** Removed from verion 3.9+
 
 ## Version History
+
+### Version 4.9.0
+* Test base class now uses `development.ini` file to read the configurations. So tests will run
+with same configurations as the development versions.
+* Initializing database by inserting some test data is made easier by introducing `init_db` and
+`clean_db` methods in `BaseTest` class. Child classes will just implement these methods to insert
+test data into database by normal `session.add` or `session.delete` methods.
 
 ### Version 4.0.0
 * More pythonic all the way. Improved `import` statements.

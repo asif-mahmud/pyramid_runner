@@ -5,7 +5,8 @@ def add_cors_headers(event):
         ('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'),
         ('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, '
                                          'Origin, Authorization, Accept, '
-                                         'Client-Security-Token, Accept-Encoding'),
+                                         'Client-Security-Token, '
+                                         'Accept-Encoding'),
         ('Access-Control-Max-Age', '3600'),
         ('Access-Control-Allow-Credentials', 'true')
     ))

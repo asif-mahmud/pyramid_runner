@@ -49,7 +49,7 @@ def includeme(config):
     """
     Initialize the model for a Pyramid app.
 
-    Activate this setup using ``config.include('searchbox.models')``.
+    Activate this setup using ``config.include('{{cookiecutter.project_name}}.models')``.
 
     """
     settings = config.get_settings()

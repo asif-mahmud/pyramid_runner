@@ -10,5 +10,5 @@ class HomeView(base.BaseView):
     @view.view_config(name='', request_method='GET')
     def hello_world(self):
         return base.BaseJSONResponse(
-            msg='Hello World!',
+            msg='Welcome to {{cookiecutter.project}}!',
         )

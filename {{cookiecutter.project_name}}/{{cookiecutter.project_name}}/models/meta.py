@@ -16,7 +16,9 @@ NAMING_CONVENTION = {
     "pk": "pk_%(table_name)s"
 }
 
-
+# PostgreSQL timestamp update function that can be attached
+# to any table's date/datetime column. User should use
+# alembic revision sources to attach this function.
 PSQL_UPDATED_TIMESTAMP_FNC = sa.text(
     'CREATE OR REPLACE FUNCTION set_updated_timestamp()'
     ' RETURNS TRIGGER'
@@ -30,7 +32,19 @@ PSQL_UPDATED_TIMESTAMP_FNC = sa.text(
 )
 
 
-def psql_attach_update_timestamp_trigger(tablename):
+def psql_update_timestamp_trigger(tablename):
+    """SQL text creator function.
+
+    Creates SQL command to attach timestamp update trigger
+    function to specified table. Only for PostgreSQL backend.
+
+    Params:
+        tablename(str): Actual table name.
+
+    Returns:
+        SQL text to attache `PSQL_UPDATED_TIMESTAMP_FNC`
+        to a specific table by name `tablename`.
+    """
     return sa.text(
         'CREATE TRIGGER {0}_update_timestamp'
         ' BEFORE UPDATE ON {0}'
@@ -40,11 +54,43 @@ def psql_attach_update_timestamp_trigger(tablename):
     )
 
 
+# Create UUID extension in a PostgreSQL database.
+# This should be done via command line psql utility.
+PSQL_CREATE_UUID_EXT = sa.text(
+    'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"'
+)
+
+
+# SQL command to drop the timestamp update function
+# from a PostgreSQL database.
+PSQL_DROP_UPDATE_TIMESTAMP_FNC = sa.text(
+    'DROP FUNCTION set_updated_timestamp()'
+)
+
+
+# SQL command to drop the UUID extension
+# from a PostgreSQL database. Should be done
+# via psql utility.
+PSQL_DROP_UUID_EXT = sa.text(
+    'DROP EXTENSION "uuid-ossp"'
+)
+
+
 class ModelBase(object):
+    """Base class for ORM tables.
+
+    Any ORM table model should inherit the `model.meta.Base`
+    declarative base. This base class provides -
+        1. id for any entry
+        2. table name in table_name syntax
+        3. created_on and updated_on columns
+        4. an abstract __json__ method.
+    """
 
     id = sa.Column(sa.Integer, primary_key=True)
     created_on = sa.Column(sa.DateTime, server_default=sa.func.now())
-    updated_on = sa.Column(sa.DateTime, server_default=sa.func.now(), onupdate=sa.func.now())
+    updated_on = sa.Column(sa.DateTime, server_default=sa.func.now(),
+                           onupdate=sa.func.now())
 
     @declarative.declared_attr
     def __tablename__(cls):
@@ -59,10 +105,11 @@ class ModelBase(object):
         )
 
     def __json__(self, request):
-        raise NotImplementedError("{} didn't implement __json__(request) method for {}".format(
-            self.__tablename__,
-            request.url
-        ))
+        raise NotImplementedError("{} didn't implement __json__(request)"
+                                  " method for {}".format(
+                                      self.__tablename__,
+                                      request.url
+                                  ))
 
 
 metadata = schema.MetaData(naming_convention=NAMING_CONVENTION)
