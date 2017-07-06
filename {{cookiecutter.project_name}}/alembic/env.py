@@ -19,7 +19,7 @@ pyramid.paster.setup_logging(pyramid_config_file)
 # target_metadata = mymodel.Base.metadata
 app = paste.deploy.loadapp('config:%s' % pyramid_config_file, relative_to='.')
 settings = pyramid.paster.get_appsettings(pyramid_config_file)
-target_metadata = __import__(app.registry.__name__).models.Base.metadata
+target_metadata = __import__(app.registry.__name__).models.meta.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
