@@ -6,7 +6,8 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
     config = pyramid.config.Configurator(settings=settings)
-    config.add_renderer(None, renderers.JSON())   # Add JSON as default renderer
+    # Add JSON as default renderer
+    config.add_renderer(None, renderers.JSON())
     config.include('pyramid_jwt')
     config.include('.security')
     config.include('.models')
