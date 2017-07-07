@@ -153,6 +153,10 @@ Base class for ticket based authentication policy.
 
 ## Version History
 
+### Version 5.0.0
+* Little fixes.
+* Added a `.gitignore` file.
+
 ### Version 4.9.0
 * Test base class now uses `development.ini` file to read the configurations. So tests will run
 with same configurations as the development versions.

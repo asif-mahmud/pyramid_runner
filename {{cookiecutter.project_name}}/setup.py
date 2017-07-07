@@ -29,7 +29,7 @@ tests_require = [
 
 setuptools.setup(
     name='{{cookiecutter.project_name}}',
-    version='1.0.0',
+    version='{{cookiecutter.project_version}}',
     description='{{cookiecutter.project_description}}',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
