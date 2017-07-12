@@ -1,7 +1,7 @@
 from . import base
 
 
-class TestCORSHeaders(base.BaseFunctionalTest):
+class TestCORSHeaders(base.BaseTest):
 
     def test_origin_access(self):
         res = self.test_app.get('/')

@@ -1,7 +1,7 @@
 from . import base
 
 
-class TestHomeView(base.BaseFunctionalTest):
+class TestHomeView(base.BaseTest):
 
     def test_home_get(self):
         res = self.test_app.get('/')

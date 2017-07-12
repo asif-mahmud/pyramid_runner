@@ -1,11 +1,8 @@
 """Helper classes for tests.
 
 Provides -
-    1. dummy_request(dbsession): A `DummyRequest` instance.
-    2. BaseTest: Base test class that includes a database
+    BaseTest: Base test class that includes a database
         session.
-    3. BaseFunctionalTest: Base test class that includes
-        a `test_app` for cheking out the routes.
 """
 import os
 import unittest
@@ -20,11 +17,6 @@ import {{cookiecutter.project_name}}.models as models
 import {{cookiecutter.project_name}}.models.meta as meta
 
 
-def dummy_request(dbsession):
-    """Returns instance of `pyramid.testing.DummyRequest`."""
-    return testing.DummyRequest(dbsession=dbsession)
-
-
 class BaseTest(unittest.TestCase):
     """Base test class.
 
@@ -32,6 +24,7 @@ class BaseTest(unittest.TestCase):
         config: Application configuration
         engine: DB Engine
         session: DB Session instance
+        test_app: Test WSGI app instance
     """
 
     maxDiff = None
@@ -48,6 +41,10 @@ class BaseTest(unittest.TestCase):
         )
         return settings
 
+    def dummy_request(self):
+        """Get a dummy request with current session instance."""
+        return testing.DummyRequest(dbsession=self.session)
+
     def setUp(self):
         """Defines useful variables and initializes database.
 
@@ -55,8 +52,11 @@ class BaseTest(unittest.TestCase):
             1. config: Application configuration
             2. engine: DB engine
             3. session: DB session instance
+            4. test_app: Test WSGI app
         """
         settings = self.get_settings()
+        app = services.main({}, **settings)
+        self.test_app = webtest.TestApp(app=app)
 
         self.config = testing.setUp(settings=settings)
 
@@ -107,19 +107,3 @@ class BaseTest(unittest.TestCase):
 
         testing.tearDown()
         transaction.abort()
-
-
-class BaseFunctionalTest(BaseTest):
-    """Base test class for functional tests.
-
-    Attributes:
-        test_app(webtest.TestApp): A test wsgi app instance.
-    """
-
-    def setUp(self):
-        app = services.main({}, **self.get_settings())
-        self.test_app = webtest.TestApp(app=app)
-        super().setUp()
-
-    def tearDown(self):
-        super().tearDown()

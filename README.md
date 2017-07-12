@@ -153,6 +153,9 @@ Base class for ticket based authentication policy.
 
 ## Version History
 
+### Version 5.9.0
+* `BaseTest` and `BaseFunctionalTest` is being merged into single `BaseTest`
+
 ### Version 5.0.0
 * Little fixes.
 * Added a `.gitignore` file.
