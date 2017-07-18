@@ -1,3 +1,6 @@
+import logging
+import datetime
+
 import pyramid.request as request
 import pyramid.security as security
 
@@ -9,6 +12,17 @@ class BaseResource(object):
         raise NotImplementedError('ACL(__acl__) not implemented in {}'.format(
             self.__class__
         ))
+
+    def log_error(self, method, error):
+        """Log error messages from the views."""
+        logging.error(
+            '[{}] From {}.{}: {}'.format(
+                datetime.datetime.now().isoformat(),
+                self.__class__.__name__,
+                method.__name__,
+                error
+            )
+        )
 
 
 class BaseRoot(BaseResource):

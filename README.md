@@ -158,6 +158,9 @@ Base class for ticket based authentication policy.
 
 ## Version History
 
+### Version 6.0.1
+* Added `log_error` method to `BaseResource`.
+
 ### Version 6.0.0
 * Added `BaseStatusReport` and some subclasses of it. See `views.errors` package.
 * Updated project **README.md** to better reflect the setup procedure.
