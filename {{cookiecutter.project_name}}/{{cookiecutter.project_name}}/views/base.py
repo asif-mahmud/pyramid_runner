@@ -1,3 +1,6 @@
+import logging
+import datetime
+
 import pyramid.request as request
 import pyramid.view as view
 
@@ -19,6 +22,17 @@ class BaseView(object):
     def browser_friendly(self):
         """This method makes the view browser friendly."""
         return BaseJSONResponse()
+
+    def log_error(self, method, error):
+        """Log error messages from the views."""
+        logging.error(
+            '[{}] From {}.{}: {}'.format(
+                datetime.datetime.now().isoformat(),
+                self.__class__.__name__,
+                method.__name__,
+                error
+            )
+        )
 
 
 class BaseJSONResponse(dict):
@@ -76,3 +90,65 @@ class BaseJSONResponse(dict):
     @error.setter
     def error(self, error):
         self.__setitem__('error', error)
+
+
+class BaseStatusReport(BaseJSONResponse):
+    """Base class to represent a status report.
+
+    This class basically sets the foure attributes -
+    `code`, `status`, `msg`, `error` from class level
+    attributes `__code__`, `__status__`, `__msg__` and
+    `__error__` respectedly. It may be useful to define
+    some status report standards for the API.
+
+    Aside from that, this can be used just like the
+    `BaseJSONResponse`.
+
+    Usage:
+    ```
+    class LoginSuccessReport(BaseStatusReport):
+        __code__ = 100
+        __status__ = 'OK'
+        __msg__ = 'You are logged in'
+        __error__ = ''
+    ```
+    """
+
+    def __init__(self, *args, code=200, status="OK",
+                 msg="", error="", **kwargs):
+        super().__init__(
+            *args, code=code, status=status, msg=msg,
+            error=error, **kwargs
+        )
+        for attr in (
+            '__code__',
+            '__status__',
+            '__msg__',
+            '__error__',
+        ):
+            if hasattr(self, attr):
+                setattr(
+                    self,
+                    attr.replace('_', ''),
+                    getattr(self, attr)
+                )
+
+
+class BaseErrorReport(BaseStatusReport):
+    """Helper base class to build error reports.
+
+    Attributes:
+        __status__(str): Defaults to **ERROR**.
+    """
+
+    __status__ = 'ERROR'
+
+
+class BaseSuccessReport(BaseStatusReport):
+    """Helper base class to build success reports.
+
+    Attributes:
+        __status__(str): Defaults to **OK**.
+    """
+
+    __status__ = 'OK'

@@ -14,8 +14,8 @@ class BaseResource(object):
 class BaseRoot(BaseResource):
     """Base class for Root Resource.
 
-    This simplifies the resource tree from within Root resource. Child resource MUST accept the
-    following parameters -
+    This simplifies the resource tree from within Root resource. Child
+    resource MUST accept the following parameters -
 
         1. parent - instance of the parent resource
         2. key - the key string for which the Child is being reached
@@ -62,8 +62,9 @@ class BaseRoot(BaseResource):
 class BaseChild(BaseResource):
     """Base class for any child resource.
 
-    Subclass this class to provide a child node in the resource tree. Further to
-    provide child of the inherent class implement `get_child_instance(key)` method.
+    Subclass this class to provide a child node in the resource tree. Further
+    to provide child of the inherent class implement `get_child_instance(key)`
+    method.
 
     Every child must implement `__acl__` method to provide proper authorization
     policy fot it.

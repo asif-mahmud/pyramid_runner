@@ -141,6 +141,11 @@ It includes the following keys-
 
 These keys can be accessed both as dictionary keys or class attributes.
 
+### `views.base.BaseStatusReport`
+(**new in version 6.0.0**)
+A subclass of `BaseJSONResponse`. This is helpful to quickly define
+a status(error or success) report standard for the API.
+
 ### `security.base.BaseUserRetriever`
 A base class to retreive authenticated user info from request params.
 
@@ -152,6 +157,11 @@ Base class for ticket based authentication policy.
 **NOTE:** Removed from verion 3.9+
 
 ## Version History
+
+### Version 6.0.0
+* Added `BaseStatusReport` and some subclasses of it. See `views.errors` package.
+* Updated project **README.md** to better reflect the setup procedure.
+* Fixed some stylings.
 
 ### Version 5.9.0
 * `BaseTest` and `BaseFunctionalTest` is being merged into single `BaseTest`

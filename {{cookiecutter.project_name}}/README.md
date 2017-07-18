@@ -4,11 +4,10 @@
 Getting Started
 ---------------
 
-- cd <directory containing this file>
+- change directory to <directory containing this file>
 
-- $VENV/bin/pip install -e .
+- `make setup`
 
-- $VENV/bin/initialize_{{cookiecutter.project_name}}_db development.ini
+- `make upgrade` if you have database models defined and made revisions. Skip otherwise.
 
-- $VENV/bin/pserve development.ini
-
+- `make run`

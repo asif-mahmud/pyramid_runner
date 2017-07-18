@@ -16,7 +16,8 @@ class TestCORSHeaders(base.BaseTest):
             'OPTIONS',
         )
         res = self.test_app.get('/')
-        res_methods = res.headers.get('Access-Control-Allow-Methods').split(',')
+        res_methods = res.headers.get(
+            'Access-Control-Allow-Methods').split(',')
         found_methods = list()
         for method in res_methods:
             found_methods.append(method.strip())
