@@ -149,12 +149,12 @@ a status(error or success) report standard for the API.
 ### `security.base.BaseUserRetriever`
 A base class to retreive authenticated user info from request params.
 
-**NOTE:** Removed from verion 3.9+ 
+**NOTE:** Removed from version 3.9+ 
 
 ### `security.base.BaseAuthPolicy`
 Base class for ticket based authentication policy.
 
-**NOTE:** Removed from verion 3.9+
+**NOTE:** Removed from version 3.9+
 
 ## Version History
 
