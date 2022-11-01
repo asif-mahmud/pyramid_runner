@@ -91,7 +91,7 @@ cookiecutter https://github.com/asif-mahmud/pyramid_runner.git
 
 The `Makefile` inside the `project folder` provides some easy shortcut commands-
 
-- `make setup` : This command must be run once at the beginnng.
+- `make setup` : This command must be run once at the beginning.
 - `make revision`: Make a database revision by [Alembic](http://alembic.zzzcomputing.com/).
 - `make upgrade` : Migrate your database to latest revision.
 - `make downgrade` : Migrate your database to a previous revision.
@@ -147,7 +147,7 @@ A subclass of `BaseJSONResponse`. This is helpful to quickly define
 a status(error or success) report standard for the API.
 
 ### `security.base.BaseUserRetriever`
-A base class to retreive authenticated user info from request params.
+A base class to retrieve authenticated user info from request params.
 
 **NOTE:** Removed from version 3.9+ 
 

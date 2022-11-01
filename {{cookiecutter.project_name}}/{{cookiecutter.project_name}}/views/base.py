@@ -98,7 +98,7 @@ class BaseStatusReport(BaseJSONResponse):
     This class basically sets the foure attributes -
     `code`, `status`, `msg`, `error` from class level
     attributes `__code__`, `__status__`, `__msg__` and
-    `__error__` respectedly. It may be useful to define
+    `__error__` respectively. It may be useful to define
     some status report standards for the API.
 
     Aside from that, this can be used just like the
